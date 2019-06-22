@@ -1,11 +1,27 @@
 import paho.mqtt.client as mqtt
 
+speed_index = 0
+position_index = 0
+position_TRIGGER = 0
+speed_TRIGGER = 0
 
 def on_message(client, userdata, msg):
+    global speed_index
+    global position_index
+#    print("pos: ", position_index, ", speed: " ,speed_index," ",  msg.topic) 
+    if(msg.topic == "data/formatted/speed"):
+        speed_index = speed_index + 1
+        if(speed_index > speed_TRIGGER):
+            speed_index=0
+            client_remote.publish( msg.topic, msg.payload.decode("utf-8"))
 
-    client_remote.publish( msg.topic, msg.payload.decode("utf-8"))
-        
-    
+    if(msg.topic == "data/formatted/position"):
+        position_index = position_index + 1
+        if(position_index > position_TRIGGER):
+            position_index=0
+            client_remote.publish( msg.topic, msg.payload.decode("utf-8"))
+# client_remote.publish( msg.topic, msg.payload.decode("utf-8"))
+
 
 
 client_local= mqtt.Client("Telemetry_Collector")
