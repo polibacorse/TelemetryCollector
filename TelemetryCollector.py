@@ -20,6 +20,11 @@ gear_TRIGGER = 6
 def on_message(client, userdata, msg):
     global speed_index
     global position_index
+    global rpm_index
+    global th20_index
+    global tOil_index
+    global vbatt_index
+    global gear_index
 #    print("pos: ", position_index, ", speed: " ,speed_index," ",  msg.topic) 
     if(msg.topic == "data/formatted/speed"):
         speed_index = speed_index + 1
